@@ -14,17 +14,22 @@ mongoose.connect(url);
 
 const personSchema = new mongoose.Schema({
   name: String,
-  number: String,
 });
 
 const Person = mongoose.model("Person", personSchema);
 
 const person = new Person({
   name: "Chinwe Nwankwo",
-  number: "081-23596-09",
 });
 
-person.save().then((result) => {
-  console.log("person saved!");
-  mongoose.connection.close();
-});
+console.log(person);
+
+person
+  .save()
+  .then((result) => {
+    console.log("person saved!");
+    mongoose.connection.close();
+  })
+  .catch((error) => {
+    console.error("Error saving person:", error);
+  });
