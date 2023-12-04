@@ -1,0 +1,96 @@
+GET http://localhost:3001/
+
+###
+
+GET http://localhost:3001/api/persons
+
+###
+GET http://localhost:3001/info
+
+###
+GET http://localhost:3001/api/persons/9
+
+###
+DELETE http://localhost:3001/api/persons/1
+
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name" : "Chinwe Chukwuogor",
+    "number": "0234-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name" : "Mark Houston",
+    "number": "34-24445-21"
+}
+
+###
+
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Mark Nwankwo",
+    "number": "134-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Mark Nwankwo",
+    "number": "134-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Mark Nwankwo",
+    "number": "134-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Mark Nwankwo",
+    "number": "134-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Mark Nwankwo",
+    "number": "134-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Mark Nwankwo",
+    "number": "134-24445-21"
+}
+
+###
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+    "name" : "Chinwe Nwankwo",
+    "number": "14-24445-21"
+}
