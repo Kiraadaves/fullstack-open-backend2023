@@ -1,11 +1,11 @@
-require("dotenv").config();
 const express = require("express");
+const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
-const mongoose = require("mongoose");
+require("dotenv").config();
 const Person = require("./models/person");
 
-const app = express();
+
 app.use(express.json());
 app.use(express.static("dist"));
 app.use(cors());
@@ -62,44 +62,22 @@ app.delete("/api/persons/:id", morgan("tiny"), (request, response) => {
 //  return maxID + 1;
 //};
 
-app.post(
-  "/api/persons",
-  morgan(":method :url :status :res[content-length] :response-time ms - :type"),
-  (request, response) => {
-    const body = request.body;
-    if (body.name === undefined && body.number === undefined) {
-      return response.status(400).json({ error: "content missing" });
-    }
-    const person = new Person({
-      name: body.name,
-      number: body.number,
-    });
-    person.save().then((savedPerson) => {
-      response.json(savedPerson);
-    });
-
-    //if (body.name && body.number) {
-    // const person = {
-    //   id: Math.floor(Math.random() * 80),
-    //  name: body.name,
-    //  number: body.number,
-    // };
-    //if (
-    //  persons.some(
-    //    (person) => person.name === body.name || person.number === body.number
-    //  )
-    // ) {
-    //  return response
-    //    .status(400)
-    //     .json({ error: "name or number must be unique" });
-    // }
-    //  persons = persons.concat(person);
-    //  response.json(person);
-    //   } else {
-    //     return response.status(400).json({ error: "content missing" });
-    //   }
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+  console.log(`post body; ${body}`)
+  if (body.name === undefined && body.number === undefined) {
+    return response.status(400).json({error: 'content missing'})
   }
-);
+
+  const newPerson = new Person({
+    name: body.name,
+    number: body.number,
+  })
+  newPerson.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
+})
+
 
 const port = process.env.PORT;
 app.listen(port, () => {
@@ -107,5 +85,5 @@ app.listen(port, () => {
 });
 
 console.log("hello");
-console.log("welcome");
+console.log("welome");
 console.log("what can we do for you today?");
