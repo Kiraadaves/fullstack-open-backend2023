@@ -46,8 +46,8 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name" : "Mark Nwankwo",
-    "number": "134-24445-21"
+    "name" : "May Alfred",
+    "number": "132-2085-2186"
 }
 
 ###
@@ -78,19 +78,19 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3001/api/persons 
+PUT http://localhost:3001/api/persons/6576f0b6d3c2049abf207657
 content-type: application/json
 
 {
     "name" : "Mark Nwankwo",
-    "number": "134-24445-21"
+    "number": "145-21"
 }
 
 ###
-POST http://localhost:3001/api/persons 
+PUT http://localhost:3001/api/persons/6576ee12d3c2049abf20764e
 content-type: application/json
 
 {
-    "name" : "Chinwe Nwankwo",
-    "number": "14-24445-21"
+    "name" : "Chinelomu Ikedindu",
+    "number": "45-210-994"
 }
