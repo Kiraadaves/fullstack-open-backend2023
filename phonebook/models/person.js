@@ -14,7 +14,7 @@ const url = process.env.MONGODB_URI;
 mongoose
   .connect(url)
   .then((result) => {
-    console.log(`connected to mongodb`);
+    console.log("connected to mongodb");
   })
   .catch((error) => {
     console.log(`error connecting to mongodb: ${error.message}`);
@@ -31,17 +31,14 @@ const personSchema = new mongoose.Schema({
     minLength: 8,
     validate: {
       validator: function (v) {
-        const numberPatterns = [
-          /\d{2}-\d{7}/,
-          /\d{3}-\d{8}/
-        ]
+        const numberPatterns = [/\d{2}-\d{7}/, /\d{3}-\d{8}/];
 
-        return numberPatterns.some(pattern => pattern.test(v));
+        return numberPatterns.some((pattern) => pattern.test(v));
       },
-      message: props => `${props.value} is not a valid phone number`
+      message: (props) => `${props.value} is not a valid phone number`,
     },
-    required: [true, 'User phone number required']
-  }
+    required: [true, "User phone number required"],
+  },
 });
 
 personSchema.set("toJSON", {

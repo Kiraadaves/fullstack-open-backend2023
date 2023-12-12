@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
@@ -19,7 +20,7 @@ const errorHandler = (error, request, response, next) => {
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
   } else if (error.name === "ValidationError") {
-    console.log(`failed request`);
+    console.log("failed request");
     return response.status(400).json({ error: error.message });
   }
 
@@ -59,9 +60,11 @@ app.get("/api/persons", morgan("tiny"), (request, response) => {
 
 app.get("/info", morgan("tiny"), (request, response) => {
   const currentTime = new Date().toString();
-  response.send(
-    `<p>Phonebook has info for ${persons.length} people</p> <p>${currentTime}</p>`
-  );
+  Person.find({}).then((person) => {
+    response.send(
+      `<p>Phonebook has info for ${person.length} people</p> <p>${currentTime}</p>`
+    );
+  });
 });
 
 app.get("/api/persons/:id", morgan("tiny"), (request, response, next) => {
@@ -108,7 +111,6 @@ app.put("/api/persons/:id", (request, response, next) => {
 
 app.post("/api/persons", (request, response, next) => {
   const body = request.body;
-  console.log(`post body; ${body}`);
 
   const newPerson = new Person({
     name: body.name,
@@ -121,7 +123,6 @@ app.post("/api/persons", (request, response, next) => {
     })
     .catch((error) => {
       next(error);
-      
     });
 });
 
