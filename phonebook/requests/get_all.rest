@@ -73,7 +73,7 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name" : "Mark Nwankwo",
+    "name" : "M",
     "number": "134-24445-21"
 }
 

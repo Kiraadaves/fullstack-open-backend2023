@@ -18,6 +18,9 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    console.log(`failed request`);
+    return response.status(400).json({ error: error.message });
   }
 
   next(error);
@@ -43,8 +46,8 @@ morgan.token("type", (request, response) => {
 //); // note: this is used if we want to use morgan on each route
 
 //app.get("/", morgan("tiny"), (request, response) => {
- // response.send(
- //   "<h1>Welcome to MySportskit Shop Once again, Home for all your sporting needs!</h1><p>Over 50% discount on selected items</p>"
+// response.send(
+//   "<h1>Welcome to MySportskit Shop Once again, Home for all your sporting needs!</h1><p>Over 50% discount on selected items</p>"
 //  );
 //});
 
@@ -73,7 +76,7 @@ app.get("/api/persons/:id", morgan("tiny"), (request, response, next) => {
     .catch((error) => next(error));
 });
 
-app.delete("/api/persons/:id", morgan("tiny"), (request, response,next) => {
+app.delete("/api/persons/:id", morgan("tiny"), (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
     .then((result) => {
       response.status(204).end();
@@ -81,40 +84,46 @@ app.delete("/api/persons/:id", morgan("tiny"), (request, response,next) => {
     .catch((error) => next(error));
 });
 
-app.put('/api/persons/:id', (request, response, next) => {
-  const body = request.body
+app.put("/api/persons/:id", (request, response, next) => {
+  const body = request.body;
   const person = {
     name: body.name,
     number: body.number,
-  }
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  };
+  Person.findByIdAndUpdate(request.params.id, person, {
+    new: true,
+    runValidators: true,
+    context: "query",
+  })
     .then((updatedPerson) => {
       response.json(updatedPerson);
     })
     .catch((error) => next(error));
-})
+});
 //const newID = () => {
 //  const maxID =
 //    persons.length > 0 ? Math.max(...persons.map((person) => person.id)) : 0;
 //  return maxID + 1;
 //};
 
-app.post('/api/persons', (request, response) => {
-  const body = request.body
-  console.log(`post body; ${body}`)
-  if (body.name === undefined && body.number === undefined) {
-    return response.status(400).json({error: 'content missing'})
-  }
+app.post("/api/persons", (request, response, next) => {
+  const body = request.body;
+  console.log(`post body; ${body}`);
 
   const newPerson = new Person({
     name: body.name,
     number: body.number,
-  })
-  newPerson.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
-})
-
+  });
+  newPerson
+    .save()
+    .then((savedPerson) => {
+      response.json(savedPerson);
+    })
+    .catch((error) => {
+      next(error);
+      
+    });
+});
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
